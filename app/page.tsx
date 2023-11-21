@@ -1,113 +1,171 @@
-import Image from 'next/image'
+"use client";
+import Image from "next/image";
+
+import { motion, AnimatePresence } from "framer-motion";
+
+import { Mukta } from "next/font/google";
+import { useState, useRef, useEffect } from "react";
+const mukta = Mukta({ subsets: ["latin"], weight: ["400", "700", "800"] });
+
+const SocialLinks = () => {
+  const socialAccounts = ["twitter", "facebook", "instagram"];
+  const socialLinksHTML = socialAccounts.map((item) => (
+    <a
+      href={`https://${item}.com/beyonce`}
+      className={`relative inline-flex items-center justify-center w-16 h-16 text-gray-900 social-link ${item}`}
+      key={item}
+      target="blank_"
+    >
+      <i className={`relative z-10 fa fa-2x fa-${item}`} />
+    </a>
+  ));
+
+  return <ul className="flex items-center space-x-12">{socialLinksHTML}</ul>;
+};
+
+type TopButtonProps = {
+  selected?: boolean;
+  text: string;
+  onClick?: () => void;
+};
+
+type TopTextProps = TopButtonProps;
+
+const TopButton = ({ selected, text, onClick }: TopButtonProps) => (
+  <motion.button
+    layout
+    transition={{ type: "spring" }}
+    className={`top-button bg-slate-200/70 backdrop-blur-md py-2 px-5 rounded-full shadow-lg  mb-10
+    ${!selected && "w-14"}`}
+    onClick={onClick}
+  >
+    {selected && <motion.h2 className="drop-shadow-lg">{text}</motion.h2>}
+  </motion.button>
+);
+
+export const TopText = ({ selected, text }: TopTextProps) => (
+  <motion.h3
+    className={`${!selected ? "hidden" : "text-xl text-darkblue"}`}
+    animate={{ opacity: selected ? 1 : 0 }}
+  >
+    {text}
+  </motion.h3>
+);
 
 export default function Home() {
+  const [toggle, setToggle] = useState(0);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setToggle((prev) => (prev + 1) % 3);
+    }, 5000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [toggle]);
+
+  const images = ["/img1.avif", "/img2.jpg", "/img3.webp"];
+
+  const texts = [
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Utenim ad venquis nostrud exercitation ullamco laboris nisiut aliquip ex ea commodo consequat. Duis au irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "Utenim ad venquis nostrud exercitation ullamco laboris nisiut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Duis au irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "Duis au irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Utenim ad venquis nostrud exercitation ullamco laboris nisiut aliquip ex ea commodo consequat.",
+  ];
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <main className="flex flex-col lg:h-screen items-center justify-center ">
+      <div className="backdrop-blur-md bg-gradient-to-br from-reddish/30 from-10% via-blueish/30 via-30% to-purplish/30 to-90% rounded-3xl p-6 mb-10">
+        <Image src="/logo.svg" width={300} height={200} alt="logo" />
+      </div>
+      <div className="flex w-screen lg:w-[1400px] md:w-[900px] lg:h-3/5 backdrop-blur-md bg-gradient-to-br from-reddish/50 from-10% via-blueish/50 via-30% to-purplish/50 to-90% rounded-3xl relative p-10">
+        <div className="absolute -top-16 left-0 z-10 group hover:animate-rotate05 origin-[0%70%] hover:cursor-pointer bg-hand-tl bg-contain bg-no-repeat w-80 h-36">
+          <h1
+            className={`${mukta.className} font-extrabold uppercase relative top-8 left-14 text-3xl text-[#6162A3] group-hover:text-white group-hover:animate-glow-red`}
           >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+            facilitatori
+          </h1>
+        </div>
+
+        <div className="absolute -top-5 -right-20 z-10 group hover:animate-rotate0minus5 origin-[50%90%] hover:cursor-pointer bg-hand-tr bg-contain bg-no-repeat w-52 h-72">
+          <h1
+            className={`${mukta.className} font-extrabold uppercase relative top-28 left-16 text-3xl text-[#954D53] group-hover:text-white group-hover:animate-glow-red`}
+          >
+            contact
+          </h1>
+        </div>
+
+        <div className="absolute -bottom-14 -right-5 z-10 group hover:animate-rotate0minus5 origin-[0%70%] hover:cursor-pointer bg-hand-br bg-contain bg-no-repeat w-80 h-40">
+          <h1
+            className={`${mukta.className} font-extrabold uppercase relative top-24 left-20 text-3xl text-[#2E6570] group-hover:text-white group-hover:animate-glow-red`}
+          >
+            membership
+          </h1>
+        </div>
+
+        <div className="absolute -top-44 right-10 z-10  bg-head bg-contain bg-no-repeat w-96 h-80" />
+
+        <div className="flex flex-row w-full">
+          <div className="rounded-3xl self-center h-full w-1/3 relative flex-grow-0 flex-shrink-0">
+            <motion.div animate={{ opacity: toggle === 0 ? 1 : 0 }}>
+              <Image
+                className="rounded-3xl object-cover "
+                src={images[toggle]}
+                alt="Picture of the author"
+                fill={true}
+              />
+            </motion.div>
+            <motion.div animate={{ opacity: toggle === 1 ? 1 : 0 }}>
+              <Image
+                className="rounded-3xl object-cover "
+                src={images[toggle]}
+                alt="Picture of the author"
+                fill={true}
+              />
+            </motion.div>
+            <motion.div animate={{ opacity: toggle === 2 ? 1 : 0 }}>
+              <Image
+                className="rounded-3xl object-cover "
+                src={images[toggle]}
+                alt="Picture of the author"
+                fill={true}
+              />
+            </motion.div>
+          </div>
+          <div className="w-2/3 px-10 flex flex-col">
+            <div
+              className={`${mukta.className} flex gap-4 text-4xl font-extrabold text-darkblue`}
+            >
+              <TopButton
+                selected={toggle === 0}
+                text="Misiune"
+                onClick={() => setToggle(0)}
+              ></TopButton>
+
+              <TopButton
+                selected={toggle === 1}
+                text="Viziune"
+                onClick={() => setToggle(1)}
+              ></TopButton>
+
+              <TopButton
+                selected={toggle === 2}
+                text="Valori"
+                onClick={() => setToggle(2)}
+              ></TopButton>
+            </div>
+            <div className="place-self-center">
+              <TopText selected={toggle === 0} text={texts[0]}></TopText>
+              <TopText selected={toggle === 1} text={texts[1]}></TopText>
+              <TopText selected={toggle === 2} text={texts[2]}></TopText>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore the Next.js 13 playground.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+      <div className="absolute bottom-5 flex items-center justify-center">
+        <SocialLinks />
       </div>
     </main>
-  )
+  );
 }

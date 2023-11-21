@@ -6,6 +6,10 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+
+  --color-red: "#CD959C";
+  --color-blue: "#80B9C4";
+  --color-purple: "#7995C1";
 }
 
 @media (prefers-color-scheme: dark) {
@@ -18,10 +22,66 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background-image: url(/background.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.social-link {
+  &:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.5;
+    background: #fff;
+    transition: 0.5s ease;
+    animation: blob 12s linear infinite alternate;
+  }
+
+  &:hover:before {
+    opacity: 1;
+  }
+
+  &.twitter:before {
+    background: linear-gradient(165deg, #1da1f2, #657786);
+  }
+
+  &.facebook:before {
+    background: linear-gradient(165deg, #3c5a99, #dfe3ee);
+  }
+
+  &.instagram:before {
+    background: linear-gradient(165deg, #405de6, #fd1d1d);
+  }
+}
+
+@keyframes blob {
+  0%,
+  100% {
+    border-radius: 77% 47% 61% 49%;
+  }
+
+  20% {
+    border-radius: 89% 26% 70% 30%;
+  }
+
+  40% {
+    border-radius: 56% 93% 56% 94%;
+  }
+
+  60% {
+    border-radius: 68% 60% 94% 96%;
+  }
+
+  80% {
+    border-radius: 34% 74% 59% 82%;
+  }
+}
+
+.top-button {
+  transition-property: width;
+  transition-duration: 300ms;
 }
