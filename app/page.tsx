@@ -43,7 +43,7 @@ const TopButton = ({ selected, text, onClick }: TopButtonProps) => (
   </motion.button>
 );
 
-export const TopText = ({ selected, text }: TopTextProps) => (
+const TopText = ({ selected, text }: TopTextProps) => (
   <motion.h3
     className={`${!selected ? "hidden" : "text-xl text-darkblue"}`}
     animate={{ opacity: selected ? 1 : 0 }}
